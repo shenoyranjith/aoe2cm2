@@ -35,7 +35,20 @@
     "HIDDEN_BAN": "",
     "HIDDEN_SNIPE": "",
     "HIDDEN": "",
-    "RANDOM": "随机"
+    "RANDOM": "随机",
+    "Arabia": "Arabia",
+    "Arena": "Arena",
+    "Cenotes": "Cenotes",
+    "Golden Pit": "Golden Pit",
+    "Hideout": "Hideout",
+    "Islands": "Islands",
+    "Mediterranean": "Mediterranean",
+    "Serengeti": "Serengeti",
+    "Valley": "Valley",
+    "Cross": "Cross",
+    "Fortress": "Fortress",
+    "Graveyards": "Graveyards",
+    "Land Madness": "Land Madness"
   },
   "messages": {
     "finished": "todo"

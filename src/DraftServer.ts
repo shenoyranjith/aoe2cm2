@@ -27,7 +27,7 @@ export const DraftServer = {
 
         function setPlayerName(draftId: string, player: Player, name: string) {
             if (!draftsStore.has(draftId)) {
-                draftsStore.initDraft(draftId, Preset.SAMPLE);
+                draftsStore.initDraft(draftId, Preset.NAC3_QUALIFICATION_BO7);
             }
             draftsStore.setPlayerName(draftId, player, name);
         }

@@ -1125,14 +1125,14 @@ input[type="checkbox"]:checked + label span
 }
 
 .pick {
-	width: 96px;
-	height: 96px;
+	width: 200px;
+	height: 200px;
 	background: #4caf50;
 }
 
 .ban {
-	width: 56px;
-	height: 56px;
+	width: 150px;
+	height: 150px;
 	background: #f44336;
 }
 
@@ -1318,7 +1318,7 @@ a.shadowbutton:hover {
 /** grid stuff **/
 
 .chooser {
-	max-width: 720px;
+	max-width: 940px;
 	display: block;
 	margin: 8px auto;
 	background: transparent;
@@ -1331,7 +1331,7 @@ a.shadowbutton:hover {
 
 .choice {
 	box-sizing: border-box;
-	width: 80px;
+	width: 180px;
 	transition: all 0.25s ease;
 	margin: 4px;
 	padding: 8px;
