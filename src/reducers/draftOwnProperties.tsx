@@ -2,6 +2,7 @@ import {IDraftOwnPropertiesState} from "../types";
 import {DraftOwnPropertiesAction} from "../actions";
 import {Actions} from "../constants";
 import NameGenerator from "../util/NameGenerator";
+import Player from "../constants/Player";
 
 export const initialDraftOwnPropertiesState: IDraftOwnPropertiesState = {
     whoAmI: undefined,
@@ -34,6 +35,17 @@ export const draftOwnPropertiesReducer = (state: IDraftOwnPropertiesState = init
             console.log(Actions.CHANGE_OWN_NAME, action);
             NameGenerator.writeNameToLocalStorage(action.value);
             return {...state, ownName: action.value};
+        case Actions.SET_OWN_ROLE:
+            console.log(Actions.SET_OWN_ROLE, action);
+            return {...state, whoAmI: action.value};
+
+        case Actions.REPLAY:
+            console.log(Actions.REPLAY, action.value);
+            return {
+                ...state,
+                whoAmI: Player.NONE,
+                nextAction: action.value.events.length
+            };
     }
     return state;
 };

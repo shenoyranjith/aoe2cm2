@@ -48,14 +48,16 @@ export class DraftsStore {
         return this.drafts.has(draftId);
     }
 
-    public setPlayerName(draftId: string, player: Player, name: string) {
+    public connectPlayer(draftId: string, player: Player, name: string) {
         const draft: Draft = this.getDraftOrThrow(draftId);
         switch (player) {
             case Player.HOST:
                 draft.nameHost = name;
+                draft.hostConnected = true;
                 break;
             case Player.GUEST:
                 draft.nameGuest = name;
+                draft.guestConnected = true;
                 break;
         }
     }

@@ -13,6 +13,8 @@ export function mapStateToProps(state: ApplicationState) {
         events: state.draft.events,
         nameGuest: state.draft.nameGuest as string,
         nameHost: state.draft.nameHost as string,
+        hostConnected: state.draft.hostConnected,
+        guestConnected: state.draft.guestConnected,
         nextAction: state.ownProperties.nextAction,
         preset: state.draft.preset as Preset,
         whoAmI: state.ownProperties.whoAmI as Player,
@@ -28,11 +30,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.Action>) {
         onDraftConfig: (config: IDraftConfig) => {
             dispatch(actions.applyConfig(config));
         },
-        onSetNameGuestAction: (name: string) => dispatch(actions.setName(Player.GUEST, name)),
-        onSetNameHostAction: (name: string) => dispatch(actions.setName(Player.HOST, name)),
-        triggerJoin: (name: string) => dispatch(actions.sendJoin(name)),
+        onSetNameGuestAction: (name: string) => dispatch(actions.connectPlayer(Player.GUEST, name)),
+        onSetNameHostAction: (name: string) => dispatch(actions.connectPlayer(Player.HOST, name)),
+        triggerConnect: () => dispatch(actions.connect()),
+        triggerJoin: (name: string, role: Player) => dispatch(actions.sendJoin(name, role)),
         triggerDisconnect: () => dispatch(actions.disconnect()),
-        showNameModal: () => dispatch(actions.showNameModal())
+        showNameModal: () => dispatch(actions.showNameModal()),
+        showRoleModal: () => dispatch(actions.showRoleModal())
     }
 }
 

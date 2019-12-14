@@ -29,21 +29,36 @@ import {initialPresetEditorState} from "./reducers/presetEditor";
 const createMySocketMiddleware = () => {
 
     return (storeAPI: { dispatch: (arg0: Action) => void; getState: () => ApplicationState }) => {
-        let socket: any = null;
+        let socket: SocketIOClient.Socket | null = null;
 
         return (next: (arg0: any) => void) => (action: Action) => {
+
+            if (action.type === Actions.CONNECT) {
+                console.log("CONNECT", SocketUtil.initSocketIfFirstUse, socket, storeAPI);
+                if (socket === null) {
+                    socket = SocketUtil.initSocketIfFirstUse(socket, storeAPI) as SocketIOClient.Socket;
+                }
+            }
+
             if (action.type === Actions.SEND_JOIN) {
                 console.log("SEND_JOIN", SocketUtil.initSocketIfFirstUse, socket, storeAPI);
-                socket = SocketUtil.initSocketIfFirstUse(socket, storeAPI);
+                socket = SocketUtil.initSocketIfFirstUse(socket, storeAPI) as SocketIOClient.Socket;
+                if (socket.disconnected) {
+                    return;
+                }
                 const sendJoin = action as ISendJoin;
-                socket.emit('join', {name: sendJoin.name}, (data: IDraftConfig) => {
+                socket.emit('join', {name: sendJoin.name, role: sendJoin.role}, (data: IDraftConfig) => {
                     console.log('join callback', data);
                     storeAPI.dispatch({type: Actions.APPLY_CONFIG, value: data} as IApplyConfig);
                 });
                 return;
             }
+
             if (action.type === Actions.SEND_READY) {
-                socket = SocketUtil.initSocketIfFirstUse(socket, storeAPI);
+                socket = SocketUtil.initSocketIfFirstUse(socket, storeAPI) as SocketIOClient.Socket;
+                if (socket.disconnected) {
+                    return;
+                }
                 socket.emit('ready', {}, (data: IDraftConfig) => {
                     console.log('ready callback', data);
                     storeAPI.dispatch({type: Actions.APPLY_CONFIG, value: data} as IApplyConfig);
@@ -52,13 +67,18 @@ const createMySocketMiddleware = () => {
             }
 
             if (action.type === Actions.CLICK_CIVILISATION) {
-                socket = SocketUtil.initSocketIfFirstUse(socket, storeAPI);
+                socket = SocketUtil.initSocketIfFirstUse(socket, storeAPI) as SocketIOClient.Socket;
+                if (socket.disconnected) {
+                    return;
+                }
                 const clickCivilisation = action as IClickOnCiv;
                 socket.emit('act', clickCivilisation.playerEvent, clickCivilisation.callback);
             }
 
             if (action.type === Actions.DISCONNECT) {
-                socket = SocketUtil.disconnect(socket, storeAPI);
+                if (socket !== null && socket.connected) {
+                    socket = SocketUtil.disconnect(socket, storeAPI);
+                }
             }
 
             return next(action);
