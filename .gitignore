@@ -1,7 +1,5 @@
 /data
 /presets
-presets.json
-alerts.json
 recentDrafts.json
 *.log
 
